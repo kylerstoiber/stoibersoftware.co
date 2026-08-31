@@ -14,7 +14,6 @@
   --accent: #5FB3B4;
   --accent-bright: #7CC5C6;
   --accent-deep: #3E7B7C;
-  --hero-bg: #0F1F20;          /* flat dark teal band behind the hero */
   --line: rgba(255, 255, 255, 0.10);
   --line-strong: rgba(255, 255, 255, 0.16);
   --radius: 20px;
@@ -181,18 +180,20 @@ a[href^="mailto:["]::after {
 /* ---------- Hero ---------- */
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
-  background: var(--hero-bg);
+  background: var(--bg);
   border-bottom: 1px solid var(--line);
   display: grid; align-items: center;
   min-height: min(calc(100vh - var(--header-h)), 860px);
   min-height: min(calc(100svh - var(--header-h)), 860px);
   padding: clamp(64px, 11vh, 128px) 0 clamp(48px, 7vh, 80px);
 }
-.hero::after { /* flat teal dot grid, no fade */
+.hero::after { /* fine teal grid, flat (no fade) */
   content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none;
-  background-image: radial-gradient(rgba(95, 179, 180, 0.30) 1px, transparent 1.6px);
-  background-size: 30px 30px;
-  background-position: 50% 50%;
+  background-image:
+    linear-gradient(rgba(95, 179, 180, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(95, 179, 180, 0.12) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
 }
 
 .hero-title {
