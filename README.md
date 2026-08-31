@@ -92,7 +92,7 @@ index.html     landing page (hero, products, about, contact, footer)
 privacy.html   privacy policy for both apps (draft — see checklist)
 support.html   support page for both apps (draft — see checklist)
 styles.css     all styling, including the CSS-only product demos
-script.js      typing hero, scroll reveals, card tilt, progress bar, demo pausing
+script.js      typing hero, interactive hero dot field, scroll reveals, card tilt, progress bar, demo pausing
 favicon.svg    tab icon
 CNAME          custom domain for GitHub Pages
 .nojekyll      disables Jekyll processing on GitHub Pages
@@ -104,4 +104,5 @@ CLAUDE.md      project brief
 - Everything Apple needs is plain HTML. JavaScript only adds motion; if `script.js` fails to load, the page shows itself after 3.5 s (see the `js-fallback` animation in `styles.css`). Test with JS off via Safari's **Develop → Disable JavaScript**.
 - Every animation honours `prefers-reduced-motion` (System Settings → Accessibility → Display → Reduce Motion).
 - The product demos are pure CSS keyframes and pause automatically when scrolled off-screen.
+- The hero background is a canvas of teal dots that react to the pointer (desktop) and to taps/drags (touch), with a slow idle wave. It pauses off-screen, is skipped under reduced motion, and without JS a static CSS dot grid shows instead. Tuning knobs are at the top of `initHeroField()` in `script.js` (`GAP` = dot spacing, `RADIUS` = pointer influence).
 - Lighthouse: open the site in Chrome, DevTools → Lighthouse → Mobile → Performance + Accessibility.

@@ -187,14 +187,14 @@ a[href^="mailto:["]::after {
   min-height: min(calc(100svh - var(--header-h)), 860px);
   padding: clamp(64px, 11vh, 128px) 0 clamp(48px, 7vh, 80px);
 }
-.hero::after { /* fine teal grid, flat (no fade) */
+.hero::after { /* static teal dot grid: shown without JS or with reduced motion */
   content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(95, 179, 180, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(95, 179, 180, 0.12) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-position: center top;
+  background-image: radial-gradient(rgba(95, 179, 180, 0.32) 1px, transparent 1.5px);
+  background-size: 32px 32px;
+  background-position: 50% 50%;
 }
+.hero.has-field::after { display: none; }
+.hero-field { position: absolute; z-index: -1; inset: 0; pointer-events: none; }
 
 .hero-title {
   font-size: clamp(2.2rem, 10.6vw, 6rem);
