@@ -15,9 +15,9 @@
   ];
 
   /* Timing (milliseconds) */
-  var NAME_START_DELAY = 500;   // pause before the company name starts typing
-  var NAME_CHAR_MIN = 55, NAME_CHAR_MAX = 125, NAME_SPACE_PAUSE = 200;
-  var CYCLE_START_DELAY = 700;  // pause after the name finishes
+  var NAME_START_DELAY = 120;   // pause before the company name starts typing (after the font is ready)
+  var NAME_CHAR_MIN = 40, NAME_CHAR_MAX = 85, NAME_SPACE_PAUSE = 130;
+  var CYCLE_START_DELAY = 600;  // pause after the name finishes
   var CYCLE_CHAR_MIN = 45, CYCLE_CHAR_MAX = 110, CYCLE_SPACE_PAUSE = 90;
   var CYCLE_HOLD = 2200;        // how long a finished phrase sits before erasing
   var CYCLE_ERASE = 28;         // per character
@@ -72,7 +72,10 @@
         }
       }
     }
-    setTimeout(typeName, NAME_START_DELAY);
+    // Start once the web font is in (so the name doesn't swap fonts mid-typing), but never wait more than 700ms.
+    var started = false;
+    function kick() { if (!started) { started = true; setTimeout(typeName, NAME_START_DELAY); } }
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(kick); setTimeout(kick, 700); } else kick();
   }
 
   function startCycle(hero, el) {
@@ -136,11 +139,11 @@
     for (i = 0; i < items.length; i++) io.observe(items[i]);
   }
 
-  /* ---------- 3. Card tilt + cursor glow (mouse/pen only) ---------- */
+  /* ---------- 3. Tilt + cursor glow on [data-tilt] elements (mouse/pen only) ---------- */
   function initTilt() {
     if (!finePointer || reduceMotion) return;
-    var cards = document.querySelectorAll('.card');
-    for (var c = 0; c < cards.length; c++) bindTilt(cards[c]);
+    var els = document.querySelectorAll('[data-tilt]');
+    for (var c = 0; c < els.length; c++) bindTilt(els[c]);
   }
 
   function bindTilt(card) {
@@ -196,37 +199,29 @@
     measure(); update();
   }
 
-  /* ---------- 5. Pause product demos while off-screen ---------- */
-  function initDemos() {
-    var demos = document.querySelectorAll('.demo');
-    if (!demos.length || !hasIO) return;
-    var io = new IntersectionObserver(function (entries) {
-      for (var i = 0; i < entries.length; i++) {
-        entries[i].target.classList.toggle('is-paused', !entries[i].isIntersecting);
-      }
-    }, { threshold: 0.05 });
-    for (var d = 0; d < demos.length; d++) io.observe(demos[d]);
-  }
-
-  /* ---------- 6. Interactive hero lines ----------
-     Flat teal contour lines that drift slowly and part around the pointer
-     (or your finger on touch). Skipped under reduced motion; without JS the
-     CSS fallback shows static hairlines instead. */
-  function initHeroLines() {
+  /* ---------- 5. Interactive topographic hero ----------
+     Contour lines (marching squares) over a slowly drifting height field.
+     The pointer acts as a hill: rings form around it and follow it. Touch:
+     tap or drag raises a hill under your finger that settles back down.
+     Skipped under reduced motion; without JS the CSS hairlines show. */
+  function initHeroTopo() {
     var hero = document.querySelector('.hero');
     if (!hero || reduceMotion || !window.CanvasRenderingContext2D) return;
-    var LINES = 14;     // how many lines span the hero
-    var AMP = 14;       // idle wave height (px)
-    var RADIUS = 200;   // pointer influence (px)
-    var BULGE = 48;     // how far lines part around the pointer (px)
-    var STEP = 10;      // sampling step along x (px)
+    var LEVELS = 15;    // number of contour levels
+    var WL = 320;       // base feature size (px); smaller = busier map
+    var OCT = 4;        // noise octaves; more = finer detail
+    var GAIN = 3.0;     // field contrast; higher = more lines crossed
+    var SIGMA = 120;    // pointer hill radius (px)
+    var LIFT = 1.2;     // pointer hill height (field spans about -1..1)
+    var SPEED = 1;      // idle drift multiplier
+    var EDGES = [[], [3, 2], [2, 1], [3, 1], [0, 1], [0, 1, 3, 2], [0, 2], [0, 3], [0, 3], [0, 2], [0, 3, 2, 1], [0, 1], [3, 1], [2, 1], [3, 2], []];
     var canvas = document.createElement('canvas');
     canvas.className = 'hero-field';
     canvas.setAttribute('aria-hidden', 'true');
     hero.insertBefore(canvas, hero.firstChild);
     hero.classList.add('has-field');
     var ctx = canvas.getContext('2d');
-    var w = 0, h = 0, rect = null, dirty = true;
+    var w = 0, h = 0, cell = 14, cols = 0, rows = 0, field = null, rect = null, dirty = true;
     var px = -9999, py = -9999, strength = 0, target = 0;
     var visible = true, raf = 0, t0 = performance.now();
 
@@ -237,35 +232,72 @@
       canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
       canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cell = Math.max(10, Math.min(16, Math.sqrt(w * h / 6000)));
+      cols = Math.ceil(w / cell) + 2; rows = Math.ceil(h / cell) + 2;
+      field = new Float32Array(cols * rows);
       dirty = false;
     }
+
+    // --- height field ---
+    function hash(ix, iy) {
+      var n = (Math.imul(ix, 374761393) + Math.imul(iy, 668265263)) | 0;
+      n = Math.imul(n ^ (n >>> 13), 1274126177);
+      return ((n ^ (n >>> 16)) >>> 0) / 4294967296;
+    }
+    function noise(x, y) { // 2D value noise, 0..1
+      var x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0;
+      fx = fx * fx * (3 - 2 * fx); fy = fy * fy * (3 - 2 * fy);
+      var a = hash(x0, y0), b = hash(x0 + 1, y0), c = hash(x0, y0 + 1), d = hash(x0 + 1, y0 + 1);
+      var top = a + (b - a) * fx, bot = c + (d - c) * fx;
+      return top + (bot - top) * fy;
+    }
+    var DRIFT = [[0.012, 0.007], [-0.009, 0.011], [0.007, -0.012], [-0.011, -0.006]];
+    function sampleNoise(x, y, t) { // layered value noise; each octave drifts its own way so shapes morph
+      var f = 1 / WL, amp = 1, sum = 0, norm = 0;
+      var wx = x + WL * 0.3 * (noise(x * f * 0.6 + 11.7 + t * 0.006, y * f * 0.6 + 3.9) - 0.5);
+      var wy = y + WL * 0.3 * (noise(x * f * 0.6 + 5.1, y * f * 0.6 + 17.3 - t * 0.006) - 0.5);
+      for (var o = 0; o < OCT; o++) {
+        sum += amp * noise(wx * f + t * DRIFT[o][0] * (o + 1) + o * 19.1, wy * f + t * DRIFT[o][1] * (o + 1) + o * 7.7);
+        norm += amp; amp *= 0.5; f *= 2;
+      }
+      return (sum / norm - 0.5) * GAIN;
+    }
+    var sample = sampleNoise;
 
     function frame(now) {
       raf = 0;
       if (!visible) return;
-      var t = (now - t0) / 1000;
-      strength += (target - strength) * (target > strength ? 0.14 : 0.05); // quick in, slow fade
+      var t = (now - t0) / 1000 * SPEED;
+      strength += (target - strength) * (target > strength ? 0.14 : 0.05);
+      var live = strength > 0.01, s2 = 2 * SIGMA * SIGMA, i, j;
+      for (j = 0; j < rows; j++) {
+        for (i = 0; i < cols; i++) {
+          var x = i * cell, y = j * cell, v = sample(x, y, t);
+          if (live) { var dx = x - px, dy = y - py; v += LIFT * strength * Math.exp(-(dx * dx + dy * dy) / s2); }
+          field[j * cols + i] = v;
+        }
+      }
       ctx.clearRect(0, 0, w, h);
-      ctx.lineWidth = 1;
       ctx.strokeStyle = '#5FB3B4';
-      var gap = h / (LINES + 1), live = strength > 0.01, r2 = RADIUS * RADIUS;
-      for (var i = 1; i <= LINES; i++) {
-        var baseY = gap * i, phase = i * 0.9, dir = baseY < py ? -1 : 1;
-        var near = Math.abs(baseY - py);
-        ctx.globalAlpha = 0.15 + (live && near < RADIUS ? 0.4 * (1 - near / RADIUS) * strength : 0);
+      var ex = [0, 0, 0, 0], ey = [0, 0, 0, 0];
+      for (var L = 0; L < LEVELS; L++) {
+        var iso = -1.1 + (L + 0.5) * (2.2 / LEVELS), index = L % 4 === 2;
+        ctx.globalAlpha = index ? 0.34 : 0.15;
+        ctx.lineWidth = index ? 1.25 : 1;
         ctx.beginPath();
-        for (var x = 0; x <= w + STEP; x += STEP) {
-          var y = baseY
-            + AMP * Math.sin(x * 0.0065 + phase + t * 0.45)
-            + AMP * 0.45 * Math.sin(x * 0.017 - phase + t * 0.3);
-          if (live) {
-            var dx = x - px, dy = y - py, d2 = dx * dx + dy * dy;
-            if (d2 < r2) {
-              var k = 1 - Math.sqrt(d2) / RADIUS; k = k * k * strength;
-              y += dir * BULGE * k;
-            }
+        for (j = 0; j < rows - 1; j++) {
+          for (i = 0; i < cols - 1; i++) {
+            var k = j * cols + i, a = field[k], b = field[k + 1], c = field[k + cols + 1], d = field[k + cols];
+            var idx = (a > iso ? 8 : 0) | (b > iso ? 4 : 0) | (c > iso ? 2 : 0) | (d > iso ? 1 : 0);
+            if (!idx || idx === 15) continue;
+            var x0 = i * cell, y0 = j * cell;
+            ex[0] = x0 + cell * (iso - a) / (b - a); ey[0] = y0;                 // top
+            ex[1] = x0 + cell;                      ey[1] = y0 + cell * (iso - b) / (c - b); // right
+            ex[2] = x0 + cell * (iso - d) / (c - d); ey[2] = y0 + cell;          // bottom
+            ex[3] = x0;                             ey[3] = y0 + cell * (iso - a) / (d - a); // left
+            var e = EDGES[idx];
+            for (var n = 0; n < e.length; n += 2) { ctx.moveTo(ex[e[n]], ey[e[n]]); ctx.lineTo(ex[e[n + 1]], ey[e[n + 1]]); }
           }
-          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
         ctx.stroke();
       }
@@ -280,17 +312,14 @@
     hero.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') { point(e); target = 1; } });
     hero.addEventListener('pointermove', function (e) { if (e.pointerType !== 'touch' || target) point(e); });
     hero.addEventListener('pointerleave', function () { target = 0; });
-    hero.addEventListener('pointerdown', function (e) { if (e.pointerType === 'touch') { point(e); strength = 1; target = 1; } }); // tap = instant part
+    hero.addEventListener('pointerdown', function (e) { if (e.pointerType === 'touch') { point(e); strength = 1; target = 1; } });
     hero.addEventListener('pointerup', function (e) { if (e.pointerType === 'touch') target = 0; });
     hero.addEventListener('pointercancel', function () { target = 0; });
     window.addEventListener('scroll', function () { dirty = true; }, { passive: true });
     window.addEventListener('resize', function () { resize(); start(); });
     document.addEventListener('visibilitychange', function () { if (!document.hidden) start(); });
     if (hasIO) {
-      new IntersectionObserver(function (entries) {
-        visible = entries[0].isIntersecting;
-        start();
-      }, { threshold: 0.02 }).observe(hero);
+      new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; start(); }, { threshold: 0.02 }).observe(hero);
     }
     resize();
     start();
@@ -300,6 +329,5 @@
   initReveals();
   initTilt();
   initProgress();
-  initDemos();
-  initHeroLines();
+  initHeroTopo();
 })();

@@ -17,8 +17,8 @@ Still to do:
   1. replace `<span class="btn btn-ghost btn--pending">Coming soon to the App&nbsp;Store</span>` with `<a class="btn btn-primary" href="https://apps.apple.com/…">Get Fliqit on the App&nbsp;Store</a>`
   2. change the card meta `iOS · Productivity · Coming soon` → `iOS · Productivity`
   3. change the Products heading back to `Two apps. Both on the App&nbsp;Store.` and the hero fact `Two iOS apps` → `Two apps on the App&nbsp;Store`
-- [ ] **Privacy & support pages** are drafts. Sentences highlighted in yellow (`<mark>…</mark>`) describe app behaviour I guessed at — confirm or rewrite each, then delete the yellow "Draft" box at the top of both pages.
-- [ ] **App icons.** The two icons in the product cards are inline SVG placeholders. Replace the contents of each `<div class="app-icon">` with `<img src="fliqit-icon.png" alt="" width="56" height="56">` (export at 256px or larger).
+- [ ] **Privacy & support pages** are drafts for SaleScout (Fliqit links to its own pages on getfliqit.com). Sentences highlighted in yellow (`<mark>…</mark>`) still need confirming — then delete the yellow "Draft" box at the top of both pages.
+- [x] App icons and screenshots are the real ones (see `assets/`).
 - [ ] Optional: an `og:image` (1200×630 PNG) so links unfurl with a picture.
 
 If you ever reintroduce a bracketed placeholder href, the `a[href^="["]` rule in `styles.css` shows a yellow **placeholder** badge on it automatically.
@@ -91,9 +91,10 @@ Add, remove, or reorder lines. Keep them short so they fit on one line on a phon
 index.html     landing page (hero, products, about, contact, footer)
 privacy.html   privacy policy for both apps (draft — see checklist)
 support.html   support page for both apps (draft — see checklist)
-styles.css     all styling, including the CSS-only product demos
-script.js      typing hero, interactive hero lines, scroll reveals, card tilt, progress bar, demo pausing
+styles.css     all styling
+script.js      typing hero, topographic hero canvas, scroll reveals, screenshot tilt, progress bar
 favicon.svg    tab icon
+assets/        app icons, App Store screenshots (WebP), Apple App Store badge
 CNAME          custom domain for GitHub Pages
 .nojekyll      disables Jekyll processing on GitHub Pages
 CLAUDE.md      project brief
@@ -101,8 +102,9 @@ CLAUDE.md      project brief
 
 ## Notes
 
+- The typeface (Bricolage Grotesque, SIL Open Font License) is self-hosted from `assets/bricolage-grotesque-latin.woff2` and preloaded — the site makes no third-party requests at all.
 - Everything Apple needs is plain HTML. JavaScript only adds motion; if `script.js` fails to load, the page shows itself after 3.5 s (see the `js-fallback` animation in `styles.css`). Test with JS off via Safari's **Develop → Disable JavaScript**.
 - Every animation honours `prefers-reduced-motion` (System Settings → Accessibility → Display → Reduce Motion).
-- The product demos are pure CSS keyframes and pause automatically when scrolled off-screen.
-- The hero background is a canvas of thin teal contour lines that drift slowly and part around the pointer (desktop) or your finger (touch). It pauses off-screen, is skipped under reduced motion, and without JS static hairlines show instead. Tuning knobs are at the top of `initHeroLines()` in `script.js` (`LINES`, `AMP`, `RADIUS`, `BULGE`).
+- Product screenshots are the App Store images, resized to 560px WebP in `assets/` (regenerate from the originals in `~/Downloads/Fliqit-App-Store-0*.png` and the SaleScout App Store listing if they change). Icons are the 1024px app icons from each Xcode project.
+- The hero background is a live topographic map: contour lines (marching squares) over a drifting fractal-noise height field. The pointer is a hill that raises rings around it; on touch, a tap or drag does the same. It pauses off-screen, is skipped under reduced motion, and without JS static hairlines show instead. Tuning knobs are at the top of `initHeroTopo()` in `script.js` (`LEVELS`, `WL`, `OCT`, `GAIN`, `SIGMA`, `LIFT`, `SPEED`).
 - Lighthouse: open the site in Chrome, DevTools → Lighthouse → Mobile → Performance + Accessibility.

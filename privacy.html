@@ -14,9 +14,7 @@
   <meta property="og:description" content="What Fliqit and SaleScout collect, and what they don’t.">
   <meta property="og:url" content="https://stoibersoftware.co/privacy.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js')</script>
   <script src="script.js" defer></script>
@@ -64,35 +62,28 @@
 
         <h2 id="general">What applies to every app</h2>
         <ul>
-          <li><strong>No accounts.</strong> You don’t sign up for anything, and we don’t ask for your name, email address, or contacts.</li>
+          <li><strong>Sign-in is optional and minimal.</strong> SaleScout offers Sign in with Apple or Google so your favorites and stats follow you between devices; Fliqit signs you in with Google so it can add events to your Google Calendar. We keep only what the sign-in provides — an account ID and your email address — never your password.</li>
           <li><strong>No selling data.</strong> We don’t sell or rent personal information, and we don’t use it for advertising.</li>
           <li><strong>No third-party ads.</strong> <mark>There are no ad networks in our apps.</mark></li>
-          <li><strong>Purchases go through Apple.</strong> Subscriptions and in-app purchases are handled by the App Store. We never see your payment details; Apple’s privacy policy covers that transaction.</li>
+          <li><strong>Purchases go through Apple.</strong> Subscriptions and in-app purchases are billed by the App Store; we never see your payment details. SaleScout uses RevenueCat to check whether a subscription is active, which receives an anonymous app-user ID and the App Store receipt.</li>
           <li><strong>Diagnostics.</strong> If you’ve chosen to share analytics with app developers in iOS Settings, Apple may send us anonymous crash reports and usage statistics. We can’t identify you from them. <mark>We don’t use any other analytics or crash-reporting service.</mark></li>
         </ul>
 
         <h2 id="fliqit">Fliqit</h2>
-        <p>Fliqit turns a screenshot into a calendar event. It only ever sees a screenshot when you deliberately share one to it from the iOS share sheet.</p>
-        <h3>What it uses</h3>
-        <ul>
-          <li><strong>The screenshot you share.</strong> Fliqit reads the text in the image to find a title, date, time, and location. <mark>All of this happens on your device using Apple’s built-in text recognition. The image is never uploaded to us or to anyone else.</mark></li>
-          <li><strong>Calendar access.</strong> With your permission, Fliqit adds the event you approve to your calendar. It doesn’t read, change, or upload your existing events.</li>
-        </ul>
-        <h3>What it keeps</h3>
-        <p><mark>Nothing on our end. Fliqit doesn’t store the screenshot after the event is created,</mark> and the event lives in your calendar, where you control it.</p>
+        <p>Fliqit has its own privacy policy at <a href="https://getfliqit.com/privacy.html">getfliqit.com/privacy.html</a>, and that is the policy that applies to the app. The short version: a screenshot you deliberately share to Fliqit is sent to Fliqit’s service, where an AI model reads out the event details. You review the draft, and only the events you approve are added to your calendar. Fliqit doesn’t read your existing events.</p>
 
         <h2 id="salescout">SaleScout</h2>
         <p>SaleScout shows yard sales, estate sales, and thrift stores near you.</p>
         <h3>What it uses</h3>
         <ul>
-          <li><strong>Location.</strong> With your permission, SaleScout uses your location to center the map and find sales nearby. To fetch listings, the app sends the map area you’re looking at to our servers; it doesn’t send a history of where you’ve been. You can use the app without location access by moving the map yourself. <mark>Location is only used while the app is open.</mark></li>
-          <li><strong>Notifications.</strong> If you turn on saved-search alerts, the app asks for notification permission so it can tell you when a matching sale appears. <mark>Your saved searches are stored on your device and checked from there.</mark></li>
-          <li><strong>Your saves.</strong> Saved searches, favorites, pinned locations, and badge progress are <mark>stored on your device and not synced anywhere</mark>. Deleting the app deletes them.</li>
-          <li><strong>SaleScout Pro.</strong> The subscription is billed and managed by Apple. We receive an anonymous receipt that says a subscription is active — not your name or card details.</li>
-          <li><strong>Maps.</strong> The map itself is provided by <mark>Apple Maps</mark>, which receives the area you view under its own privacy policy.</li>
+          <li><strong>Location.</strong> With your permission, SaleScout uses your location to center the map and find sales nearby. To fetch listings, the app sends the map area you’re looking at to our server; it doesn’t send a history of where you’ve been. If you turn on alerts for new sales near you, SaleScout can also check your location in the background — only if you allow that separately in iOS. You can use the app without location access by moving the map yourself.</li>
+          <li><strong>Your account.</strong> If you sign in with Apple or Google, your favorites, saved searches, and badge progress are stored with your account so they follow you between devices. <mark>You can delete your account, and everything stored with it, from Profile in the app.</mark></li>
+          <li><strong>Notifications.</strong> If you turn on saved-search alerts, the app asks for notification permission. <mark>Your saved searches are kept with your account so our server can compare new listings against them and send you a notification.</mark></li>
+          <li><strong>SaleScout Pro.</strong> The subscription is billed and managed by Apple, with RevenueCat confirming that it’s active — neither shares your name or card details with us.</li>
+          <li><strong>Maps.</strong> The map itself is provided by <mark>Apple Maps</mark>, which receives the area you view under its own privacy policy. Directions open in the maps app you choose.</li>
         </ul>
         <h3>Listings</h3>
-        <p>Sale listings come from <mark>publicly posted sources</mark>. If a listing includes information about you that you’d like removed, email us and we’ll take care of it.</p>
+        <p>Sale listings are gathered from public listing sites and from OpenStreetMap (for thrift stores), and refreshed every few hours. If a listing includes information about you that you’d like removed, email us and we’ll take care of it.</p>
 
         <h2 id="choices">Your choices</h2>
         <ul>

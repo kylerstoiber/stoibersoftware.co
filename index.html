@@ -15,9 +15,7 @@
   <meta property="og:url" content="https://stoibersoftware.co/">
   <meta name="twitter:card" content="summary">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js')</script>
   <script src="script.js" defer></script>
@@ -25,13 +23,6 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="progress" aria-hidden="true"></div>
-
-  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
-    <symbol id="pin" viewBox="0 0 24 30">
-      <path d="M12 0C5.4 0 0 5.3 0 11.9 0 20.8 12 30 12 30s12-9.2 12-18.1C24 5.3 18.6 0 12 0z" fill="#5FB3B4"/>
-      <circle cx="12" cy="12" r="4.4" fill="#0B0D0F"/>
-    </symbol>
-  </svg>
 
   <header class="site-header">
     <div class="container site-header__inner">
@@ -76,129 +67,74 @@
           <p class="lede">Each one started as something I wanted on my own phone.</p>
         </div>
 
-        <ul class="products-grid" data-stagger>
-
-          <!-- Fliqit -->
-          <li class="reveal">
-            <article class="card" aria-labelledby="fliqit-title">
-              <span class="card-glow" aria-hidden="true"></span>
-              <header class="card-head">
-                <div class="app-icon" role="img" aria-label="Fliqit app icon (placeholder)">
-                  <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-                    <rect width="64" height="64" rx="15" fill="#F3EEE2"/>
-                    <path d="M0 15A15 15 0 0 1 15 0h34a15 15 0 0 1 15 15v7H0z" fill="#3E7B7C"/>
-                    <circle cx="23" cy="33" r="2.6" fill="#0B0D0F"/><circle cx="41" cy="33" r="2.6" fill="#0B0D0F"/>
-                    <g fill="#C9C6BC">
-                      <circle cx="17" cy="45" r="2.8"/><circle cx="27" cy="45" r="2.8"/><circle cx="37" cy="45" r="2.8"/><circle cx="47" cy="45" r="2.8"/>
-                      <circle cx="17" cy="54" r="2.8"/><circle cx="27" cy="54" r="2.8"/><circle cx="47" cy="54" r="2.8"/>
-                    </g>
-                    <circle cx="37" cy="54" r="2.8" fill="#3E7B7C"/>
-                  </svg>
-                </div>
-                <div class="card-head__text">
-                  <h3 class="card-title" id="fliqit-title">Fliqit</h3>
-                  <p class="card-meta">iOS · Productivity · Coming soon</p>
-                </div>
-              </header>
-
-              <p class="card-tagline">Turns screenshots into calendar events.</p>
-
-              <div class="demo demo--fliqit" role="img" aria-label="Animated illustration: a text message about plans is screenshotted and shared to Fliqit, which fills in a calendar event and adds it.">
-                <div class="demo-stage">
-                  <div class="fq-bubble">Pickleball at 3 tomorrow?</div>
-                  <div class="fq-flash"></div>
-                  <div class="fq-share">
-                    <svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3v12M8 7l4-4 4 4M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </div>
-                  <div class="fq-event">
-                    <div class="fq-row fq-row--1"><span class="fq-label">Title</span><span class="fq-value"><span class="fq-skel"></span><span class="fq-text">Pickleball</span></span></div>
-                    <div class="fq-row fq-row--2"><span class="fq-label">Date</span><span class="fq-value"><span class="fq-skel"></span><span class="fq-text">Tomorrow</span></span></div>
-                    <div class="fq-row fq-row--3"><span class="fq-label">Time</span><span class="fq-value"><span class="fq-skel"></span><span class="fq-text">3:00&nbsp;PM</span></span></div>
-                    <div class="fq-done">
-                      <span class="fq-check"><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                      Added to Calendar
-                    </div>
-                  </div>
-                </div>
+        <!-- SaleScout -->
+        <article class="showcase reveal" id="salescout" aria-labelledby="salescout-title">
+          <div class="showcase__text">
+            <div class="showcase__head">
+              <div class="app-icon"><img src="assets/salescout-icon.webp" alt="" width="64" height="64"></div>
+              <div>
+                <h3 class="showcase__title" id="salescout-title">SaleScout</h3>
+                <p class="card-meta">iOS · Shopping · On the App&nbsp;Store</p>
               </div>
+            </div>
+            <p class="showcase__tagline">Never miss a sale again.</p>
+            <p class="showcase__desc">Every garage sale, estate sale, and thrift store near you, on one map. Made for weekend bargain hunters, vintage collectors, estate-sale regulars, and furniture flippers.</p>
+            <ul class="feature-list">
+              <li><span><strong>Live map</strong> of nearby sales, color-coded by type, with clustering when it gets busy.</span></li>
+              <li><span><strong>Photo-rich listings</strong> gathered from public sources and refreshed every few hours.</span></li>
+              <li><span><strong>Saved-search alerts</strong> the moment a matching sale is posted.</span></li>
+              <li><span><strong>Favorites and a route builder</strong> that hands off to Apple Maps, Google Maps, or Waze.</span></li>
+              <li><span><strong>Badges</strong> that level you up from Bin Digger to The Holy Grail.</span></li>
+            </ul>
+            <p class="card-note">Free to download. SaleScout Pro unlocks the full toolkit — monthly or yearly, with a free trial. Built with React&nbsp;Native and Expo on a Supabase backend.</p>
+            <div class="showcase__actions">
+              <a class="store-badge" href="https://apps.apple.com/us/app/salescout-find-yard-sales/id6782672334"><img src="assets/app-store-badge.svg" alt="Download SaleScout on the App Store" width="120" height="40"></a>
+              <span class="card-links">
+                <a class="text-link" href="privacy.html#salescout">Privacy</a>
+                <a class="text-link" href="support.html#salescout">Support</a>
+              </span>
+            </div>
+          </div>
+          <div class="showcase__shots" data-stagger>
+            <div class="shot-wrap reveal"><figure class="shot" data-tilt><span class="card-glow" aria-hidden="true"></span><img src="assets/salescout-1.webp" srcset="assets/salescout-1-400.webp 400w, assets/salescout-1.webp 560w" sizes="(min-width: 900px) 200px, 62vw" width="560" height="1212" loading="lazy" decoding="async" alt="SaleScout map screen: dozens of color-coded sale pins across a city, under the headline “Never miss a sale again.”"></figure></div>
+            <div class="shot-wrap reveal"><figure class="shot" data-tilt><span class="card-glow" aria-hidden="true"></span><img src="assets/salescout-2.webp" srcset="assets/salescout-2-400.webp 400w, assets/salescout-2.webp 560w" sizes="(min-width: 900px) 200px, 62vw" width="560" height="1212" loading="lazy" decoding="async" alt="SaleScout sales list: a photo grid of estate sales and yard sales with distance and dates."></figure></div>
+            <div class="shot-wrap reveal"><figure class="shot" data-tilt><span class="card-glow" aria-hidden="true"></span><img src="assets/salescout-3.webp" srcset="assets/salescout-3-400.webp 400w, assets/salescout-3.webp 560w" sizes="(min-width: 900px) 200px, 62vw" width="560" height="1212" loading="lazy" decoding="async" alt="SaleScout sale detail: a huge yard sale listing with date, time, address, description, and photos."></figure></div>
+          </div>
+        </article>
 
-              <p class="card-desc">Screenshot a text about plans. Tap Share, pick Fliqit. It pulls out the title, date, time, and location, shows you the event to check, then adds it to your calendar. Three steps. No typing.</p>
-
-              <ul class="chips">
-                <li>Share-sheet extension</li>
-                <li>Title, date, time &amp; location</li>
-                <li>Review before it saves</li>
-              </ul>
-
-              <div class="card-actions">
-                <span class="btn btn-ghost btn--pending">Coming soon to the App&nbsp;Store</span>
-                <span class="card-links">
-                  <a class="text-link" href="privacy.html#fliqit">Privacy</a>
-                  <a class="text-link" href="support.html#fliqit">Support</a>
-                </span>
+        <!-- Fliqit -->
+        <article class="showcase showcase--reverse reveal" id="fliqit" aria-labelledby="fliqit-title">
+          <div class="showcase__text">
+            <div class="showcase__head">
+              <div class="app-icon"><img src="assets/fliqit-icon.webp" alt="" width="64" height="64"></div>
+              <div>
+                <h3 class="showcase__title" id="fliqit-title">Fliqit</h3>
+                <p class="card-meta">iOS · Productivity · Coming soon</p>
               </div>
-            </article>
-          </li>
-
-          <!-- SaleScout -->
-          <li class="reveal">
-            <article class="card" aria-labelledby="salescout-title">
-              <span class="card-glow" aria-hidden="true"></span>
-              <header class="card-head">
-                <div class="app-icon" role="img" aria-label="SaleScout app icon (placeholder)">
-                  <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-                    <rect width="64" height="64" rx="15" fill="#1B2024"/>
-                    <path d="M32 11c-8.3 0-15 6.6-15 14.8C17 37 32 53 32 53s15-16 15-27.2C47 17.6 40.3 11 32 11z" fill="#5FB3B4"/>
-                    <circle cx="32" cy="26" r="5.5" fill="#0B0D0F"/>
-                  </svg>
-                </div>
-                <div class="card-head__text">
-                  <h3 class="card-title" id="salescout-title">SaleScout</h3>
-                  <p class="card-meta">iOS · Shopping</p>
-                </div>
-              </header>
-
-              <p class="card-tagline">Finds nearby yard sales, estate sales, and thrift stores.</p>
-
-              <div class="demo demo--salescout" role="img" aria-label="Animated illustration: pins drop onto a map, nearby ones merge into a numbered cluster, and one pin opens a small sale card.">
-                <div class="demo-stage ss-map">
-                  <div class="ss-park"></div>
-                  <div class="ss-anchor ss-anchor--1"><div class="ss-pin ss-pin--1"><svg aria-hidden="true" focusable="false"><use href="#pin"/></svg></div></div>
-                  <div class="ss-anchor ss-anchor--2"><div class="ss-pin ss-pin--2"><svg aria-hidden="true" focusable="false"><use href="#pin"/></svg></div></div>
-                  <div class="ss-anchor ss-anchor--3"><div class="ss-pin ss-pin--3"><svg aria-hidden="true" focusable="false"><use href="#pin"/></svg></div></div>
-                  <div class="ss-anchor ss-anchor--4"><div class="ss-pin ss-pin--4"><svg aria-hidden="true" focusable="false"><use href="#pin"/></svg></div></div>
-                  <div class="ss-anchor ss-anchor--5"><div class="ss-pin ss-pin--5"><svg aria-hidden="true" focusable="false"><use href="#pin"/></svg></div></div>
-                  <div class="ss-cluster">3</div>
-                  <div class="ss-card">
-                    <strong>Estate Sale</strong>
-                    <span>Sat · 8:00&nbsp;AM · 0.4&nbsp;mi</span>
-                    <em>Furniture, tools, records</em>
-                  </div>
-                </div>
-              </div>
-
-              <p class="card-desc">A map of what’s on this weekend near you. Filter by type, save a search and get alerted when something new pops up, keep your favorites, and check the sale calendar before you head out. Dig enough and you’ll level up — from Bin Digger all the way to The Holy Grail.</p>
-
-              <ul class="chips">
-                <li>Map with pin clustering</li>
-                <li>Filters &amp; saved-search alerts</li>
-                <li>Favorites &amp; pinned spots</li>
-                <li>Sale calendar</li>
-                <li>Five-tier badges</li>
-              </ul>
-              <p class="card-note">Free to download. SaleScout Pro unlocks the full toolkit — monthly or yearly, with a free trial. Built with React&nbsp;Native.</p>
-
-              <div class="card-actions">
-                <a class="btn btn-primary" href="https://apps.apple.com/us/app/salescout-find-yard-sales/id6782672334">Get SaleScout on the App&nbsp;Store</a>
-                <span class="card-links">
-                  <a class="text-link" href="privacy.html#salescout">Privacy</a>
-                  <a class="text-link" href="support.html#salescout">Support</a>
-                </span>
-              </div>
-            </article>
-          </li>
-
-        </ul>
+            </div>
+            <p class="showcase__tagline">Click it. Fliq it. Plan it.</p>
+            <p class="showcase__desc">Any screenshot or photo with a date becomes a calendar event. Fliqit reads it — you approve it.</p>
+            <ul class="feature-list">
+              <li><span><strong>No typing.</strong> Dates, times, and places are read straight from the image — texts, flyers, emails, schedules, reservations.</span></li>
+              <li><span><strong>Lives in the share sheet.</strong> Screenshot, tap Share, pick Fliqit. One Fliq, however many events it holds.</span></li>
+              <li><span><strong>You approve it.</strong> Nothing lands on your calendar without your OK.</span></li>
+              <li><span><strong>Google or Apple Calendar.</strong> Pick where your events should go.</span></li>
+            </ul>
+            <p class="card-note">Free to start with 5 Fliqs. A native SwiftUI app with a Share Extension. More at <a href="https://getfliqit.com">getfliqit.com</a>.</p>
+            <div class="showcase__actions">
+              <span class="btn btn-ghost btn--pending">Coming soon to the App&nbsp;Store</span>
+              <span class="card-links">
+                <a class="text-link" href="https://getfliqit.com/privacy.html">Privacy</a>
+                <a class="text-link" href="https://getfliqit.com/support.html">Support</a>
+              </span>
+            </div>
+          </div>
+          <div class="showcase__shots" data-stagger>
+            <div class="shot-wrap reveal"><figure class="shot" data-tilt><span class="card-glow" aria-hidden="true"></span><img src="assets/fliqit-1.webp" srcset="assets/fliqit-1-400.webp 400w, assets/fliqit-1.webp 560w" sizes="(min-width: 900px) 200px, 62vw" width="560" height="1212" loading="lazy" decoding="async" alt="Fliqit App Store screenshot: an iPhone showing a text that says “Pickleball at 3 tomorrow?” under the headline “Turn screenshots into plans.”"></figure></div>
+            <div class="shot-wrap reveal"><figure class="shot" data-tilt><span class="card-glow" aria-hidden="true"></span><img src="assets/fliqit-2.webp" srcset="assets/fliqit-2-400.webp 400w, assets/fliqit-2.webp 560w" sizes="(min-width: 900px) 200px, 62vw" width="560" height="1212" loading="lazy" decoding="async" alt="Fliqit App Store screenshot: the app assembling an event, under the headline “Fliqit adds it to your calendar.”"></figure></div>
+            <div class="shot-wrap reveal"><figure class="shot" data-tilt><span class="card-glow" aria-hidden="true"></span><img src="assets/fliqit-3.webp" srcset="assets/fliqit-3-400.webp 400w, assets/fliqit-3.webp 560w" sizes="(min-width: 900px) 200px, 62vw" width="560" height="1212" loading="lazy" decoding="async" alt="Fliqit App Store screenshot: the Review Events sheet with title, date, start and end time filled in, under the headline “Plans found. Details handled.”"></figure></div>
+          </div>
+        </article>
       </div>
     </section>
 

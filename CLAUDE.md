@@ -20,22 +20,24 @@ Do not put a phone number, EIN, or D-U-N-S number on the site. Only the two prod
 
 ## Products
 
+Source material on this Mac: Fliqit project `~/Desktop/flickbean app/fliqit` (SwiftUI app + Share Extension, Next.js API; icon in `ios/Fliqit/Assets.xcassets`), App Store screenshots `~/Downloads/Fliqit-App-Store-0[1-4].png`, mascots `~/Desktop/fliqit-mascot`. SaleScout project `~/thriftstop` (Expo/React Native, Supabase; icon in `ios/SaleScout/Images.xcassets`), onboarding screens `~/Desktop/SaleScout onboarding flow`, badges `~/thriftstop/badgeszip`. Optimized copies used by the site live in `assets/`.
+
 ### SaleScout (published, iOS)
 - Finds nearby yard sales, estate sales, and thrift stores.
 - Built with React Native / JavaScript.
 - Features: interactive map with pin clustering, advanced filters, saved-search alerts, favorites, pinned locations, a sale calendar, and a 5-tier badge/leveling system (Bin Digger up through The Holy Grail) for retention.
 - Monetized with a **SaleScout Pro** subscription (monthly or yearly, free trial).
 - App Store link: https://apps.apple.com/us/app/salescout-find-yard-sales/id6782672334 (App Store name "SaleScout - Find Yard Sales"; free download, SaleScout Pro subscription)
-- Privacy policy: `[SALESCOUT_PRIVACY_URL]`
-- Support: `[SALESCOUT_SUPPORT_URL]`
+- Privacy policy: `privacy.html#salescout` on this site (no external page yet)
+- Support: `support.html#salescout` on this site
 
 ### Fliqit (published, iOS)
 - Turns screenshots into calendar events. Screenshot a text about plans, tap Share, pick Fliqit — it extracts the title, date, time, and location for review, then adds the event to your calendar.
 - Taglines already in use in App Store screenshots: "Turn screenshots into plans", "Plans found. Details handled.", "Three steps. No typing."
 - Visual identity: a friendly calendar mascot (teal header, white body, grey day-dots, one teal dot, small eyes). Brand teal is roughly `#3E7B7C`; the App Store screenshots use cream, sage, and muted teal backgrounds. On this dark site, use the teal as the accent and let the cream/sage appear only as text or subtle tints.
 - App Store link: `[FLIQIT_APP_STORE_URL]` (not live on the App Store as of Aug 30, 2026 — the site shows a "Coming soon" pill until it is)
-- Privacy policy: `[FLIQIT_PRIVACY_URL]`
-- Support: `[FLIQIT_SUPPORT_URL]`
+- Privacy policy: https://getfliqit.com/privacy.html (live; Fliqit's own site is in `~/Desktop/flickbean app/fliqit/website`)
+- Support: https://getfliqit.com/support.html (live)
 
 ## Why this site exists (the hard requirements)
 
