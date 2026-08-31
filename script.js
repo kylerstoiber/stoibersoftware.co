@@ -10,10 +10,8 @@
      Keep them short (they sit on one line on phones). Three or four is plenty.
      -------------------------------------------------------------------- */
   var CYCLE_PHRASES = [
-    'builds iOS apps.',
-    'makes small, useful things.',
-    'turns screenshots into plans.',
-    'finds the good yard sales.'
+    'mobile iOS apps.',
+    'est. 2026'
   ];
 
   /* Timing (milliseconds) */
