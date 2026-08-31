@@ -12,7 +12,7 @@ Done:
 
 Still to do:
 
-- [ ] **Register `stoibersoftware.us`** (it had no DNS records on Aug 30 2026), add the DNS records below, then enable GitHub Pages (see Deploy). Until the domain resolves, don't enable Pages with the `CNAME` file present — the preview URL would redirect into nothing.
+- [x] Domain registered at Porkbun, DNS set, GitHub Pages enabled with HTTPS enforced. Live at https://stoibersoftware.us (Aug 31, 2026).
 - [ ] **Fliqit App Store link.** Fliqit isn't live yet, so its card shows a non-clickable "Coming soon to the App Store" pill. When it ships, in `index.html`:
   1. replace `<span class="btn btn-ghost btn--pending">Coming soon to the App&nbsp;Store</span>` with `<a class="btn btn-primary" href="https://apps.apple.com/…">Get Fliqit on the App&nbsp;Store</a>`
   2. change the card meta `iOS · Productivity · Coming soon` → `iOS · Productivity`
