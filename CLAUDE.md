@@ -12,8 +12,8 @@ Personal brand in one line: a young builder who ships polished, practical iOS ap
 
 - **Legal name:** Stoiber Software LLC (single-member Illinois LLC, formed August 2026)
 - **Address:** 5341 Grand Ave, Western Springs, IL 60558
-- **Contact email:** `[EMAIL_ON_NEW_DOMAIN]` (e.g. kyler@stoibersoftware.com — I'll confirm)
-- **Domain:** `[DOMAIN]` (planned: stoibersoftware.com — I'll confirm once registered)
+- **Contact email:** kyler@stoibersoftware.co (confirmed Aug 30, 2026)
+- **Domain:** stoibersoftware.co (confirmed Aug 30, 2026; stoibersoftware.com has belonged to someone else since 2012)
 - **What it does:** iOS app development
 
 Do not put a phone number, EIN, or D-U-N-S number on the site. Only the two products below appear on the site — do not mention any other projects, businesses, or unreleased apps.
@@ -25,7 +25,7 @@ Do not put a phone number, EIN, or D-U-N-S number on the site. Only the two prod
 - Built with React Native / JavaScript.
 - Features: interactive map with pin clustering, advanced filters, saved-search alerts, favorites, pinned locations, a sale calendar, and a 5-tier badge/leveling system (Bin Digger up through The Holy Grail) for retention.
 - Monetized with a **SaleScout Pro** subscription (monthly or yearly, free trial).
-- App Store link: `[SALESCOUT_APP_STORE_URL]`
+- App Store link: https://apps.apple.com/us/app/salescout-find-yard-sales/id6782672334 (App Store name "SaleScout - Find Yard Sales"; free download, SaleScout Pro subscription)
 - Privacy policy: `[SALESCOUT_PRIVACY_URL]`
 - Support: `[SALESCOUT_SUPPORT_URL]`
 
@@ -33,7 +33,7 @@ Do not put a phone number, EIN, or D-U-N-S number on the site. Only the two prod
 - Turns screenshots into calendar events. Screenshot a text about plans, tap Share, pick Fliqit — it extracts the title, date, time, and location for review, then adds the event to your calendar.
 - Taglines already in use in App Store screenshots: "Turn screenshots into plans", "Plans found. Details handled.", "Three steps. No typing."
 - Visual identity: a friendly calendar mascot (teal header, white body, grey day-dots, one teal dot, small eyes). Brand teal is roughly `#3E7B7C`; the App Store screenshots use cream, sage, and muted teal backgrounds. On this dark site, use the teal as the accent and let the cream/sage appear only as text or subtle tints.
-- App Store link: `[FLIQIT_APP_STORE_URL]`
+- App Store link: `[FLIQIT_APP_STORE_URL]` (not live on the App Store as of Aug 30, 2026 — the site shows a "Coming soon" pill until it is)
 - Privacy policy: `[FLIQIT_PRIVACY_URL]`
 - Support: `[FLIQIT_SUPPORT_URL]`
 

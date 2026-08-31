@@ -172,6 +172,9 @@ a[href^="mailto:["]::after {
 }
 .btn-ghost:active { transform: scale(0.96); }
 
+.btn--pending { cursor: default; color: var(--text-soft); }
+.btn--pending:hover, .btn--pending:active { transform: none; background: rgba(255, 255, 255, 0.04); border-color: var(--line-strong); }
+
 .text-link { position: relative; font-size: 14px; font-weight: 600; color: var(--text-soft); padding-bottom: 2px; }
 
 /* ---------- Hero ---------- */

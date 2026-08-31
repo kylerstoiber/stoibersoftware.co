@@ -1,20 +1,27 @@
 # Stoiber Software LLC — website
 
-Static company site for **stoibersoftware.com**. Plain HTML, CSS, and vanilla JS. No build step, no npm, no analytics.
+Static company site for **stoibersoftware.co**. Plain HTML, CSS, and vanilla JS. No build step, no npm, no analytics.
 
-## Placeholder checklist (finish these before pointing Apple at the site)
+## Status checklist
 
-Every placeholder is a bracketed token, so `grep -rn "\[" *.html` finds them all. Each one is a single find-and-replace across the project.
+Done:
 
-- [ ] `[EMAIL_ON_NEW_DOMAIN]` → the contact email (appears in `index.html`, `privacy.html`, `support.html`)
-- [ ] `[FLIQIT_APP_STORE_URL]` → Fliqit's App Store link (`index.html`)
-- [ ] `[SALESCOUT_APP_STORE_URL]` → SaleScout's App Store link (`index.html`)
-- [ ] **Domain.** `CNAME` plus the `canonical` and `og:url` tags in all three HTML files currently say `stoibersoftware.com`. Change them if the domain ends up different.
-- [ ] **Privacy & support pages** are drafts. Sentences highlighted in yellow (`<mark>…</mark>`) describe app behaviour I guessed at — confirm or rewrite each, then delete the yellow "Draft" box at the top of both pages. If you'd rather link to external policy/support pages, replace the `privacy.html#…` and `support.html#…` hrefs in `index.html`.
+- [x] Contact email → `kyler@stoibersoftware.co` (index, privacy, support)
+- [x] SaleScout App Store link
+- [x] Domain → `stoibersoftware.co` in `CNAME` and in the `canonical` + `og:url` tags (`stoibersoftware.com` belongs to someone else)
+
+Still to do:
+
+- [ ] **Register `stoibersoftware.co`** (it had no DNS records on Aug 30 2026), add the DNS records below, then enable GitHub Pages (see Deploy). Until the domain resolves, don't enable Pages with the `CNAME` file present — the preview URL would redirect into nothing.
+- [ ] **Fliqit App Store link.** Fliqit isn't live yet, so its card shows a non-clickable "Coming soon to the App Store" pill. When it ships, in `index.html`:
+  1. replace `<span class="btn btn-ghost btn--pending">Coming soon to the App&nbsp;Store</span>` with `<a class="btn btn-primary" href="https://apps.apple.com/…">Get Fliqit on the App&nbsp;Store</a>`
+  2. change the card meta `iOS · Productivity · Coming soon` → `iOS · Productivity`
+  3. change the Products heading back to `Two apps. Both on the App&nbsp;Store.` and the hero fact `Two iOS apps` → `Two apps on the App&nbsp;Store`
+- [ ] **Privacy & support pages** are drafts. Sentences highlighted in yellow (`<mark>…</mark>`) describe app behaviour I guessed at — confirm or rewrite each, then delete the yellow "Draft" box at the top of both pages.
 - [ ] **App icons.** The two icons in the product cards are inline SVG placeholders. Replace the contents of each `<div class="app-icon">` with `<img src="fliqit-icon.png" alt="" width="56" height="56">` (export at 256px or larger).
 - [ ] Optional: an `og:image` (1200×630 PNG) so links unfurl with a picture.
 
-Any link whose `href` still starts with `[` automatically shows a yellow **placeholder** badge (the `a[href^="["]` rule in `styles.css`). Once every href is real the badges disappear on their own; you can delete that rule.
+If you ever reintroduce a bracketed placeholder href, the `a[href^="["]` rule in `styles.css` shows a yellow **placeholder** badge on it automatically.
 
 ## Run locally
 
@@ -26,7 +33,7 @@ python3 -m http.server 8000
 
 ## Deploy to GitHub Pages
 
-1. Create a GitHub repo (any name; `stoibersoftware.com` is conventional) and push these files to the root of `main`:
+1. Create a GitHub repo (any name; `stoibersoftware.co` is conventional) and push these files to the root of `main`:
    ```sh
    git init -b main
    git add .
@@ -35,14 +42,14 @@ python3 -m http.server 8000
    git push -u origin main
    ```
 2. In the repo: **Settings → Pages → Build and deployment → Source: Deploy from a branch → `main` / `/ (root)`**.
-3. Under **Custom domain**, enter `stoibersoftware.com` and save. It must match the `CNAME` file exactly. Once the DNS check passes, tick **Enforce HTTPS**.
-4. Recommended: **your profile → Settings → Pages → Add a domain** and verify `stoibersoftware.com` there too, so nobody else can claim it on GitHub Pages.
+3. Under **Custom domain**, enter `stoibersoftware.co` and save. It must match the `CNAME` file exactly. Once the DNS check passes, tick **Enforce HTTPS**.
+4. Recommended: **your profile → Settings → Pages → Add a domain** and verify `stoibersoftware.co` there too, so nobody else can claim it on GitHub Pages.
 
 `.nojekyll` tells Pages to serve the files as-is; `CNAME` keeps the custom domain across future pushes.
 
 ## DNS records (at the registrar)
 
-Apex domain (`stoibersoftware.com`):
+Apex domain (`stoibersoftware.co`):
 
 | Type | Name | Value |
 |------|------|-------|
@@ -61,7 +68,7 @@ Apex domain (`stoibersoftware.com`):
 |-------|-------|-------|
 | CNAME | `www` | `<your-username>.github.io` |
 
-Remove any registrar "parking" A record first. Propagation can take up to 24 hours; check with `dig stoibersoftware.com +noall +answer`. GitHub will redirect `www` to the apex automatically once both resolve.
+Remove any registrar "parking" A record first. Propagation can take up to 24 hours; check with `dig stoibersoftware.co +noall +answer`. GitHub will redirect `www` to the apex automatically once both resolve.
 
 ## Editing the typing animation
 
