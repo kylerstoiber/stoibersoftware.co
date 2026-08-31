@@ -4,7 +4,7 @@ You are helping me build a small, fast, static company website. Read this whole 
 
 ## Who I am
 
-I'm Kyler Stoiber — a student at the University of Illinois Urbana-Champaign (BS in Information Sciences, CS minor, interested in data science and marketing analytics) and an indie iOS developer. I founded **Stoiber Software LLC** in August 2026 as the home for my apps. I'm the sole member and do all the development, design, and marketing myself.
+I'm Kyler Stoiber — a student at the University of Illinois Urbana-Champaign (BS in Information Science + Data Science; no minor; interested in marketing analytics) and an indie iOS developer. I founded **Stoiber Software LLC** in August 2026 as the home for my apps. I'm the sole member and do all the development, design, and marketing myself.
 
 Personal brand in one line: a young builder who ships polished, practical iOS apps for everyday problems.
 
