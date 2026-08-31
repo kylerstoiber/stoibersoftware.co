@@ -12,8 +12,8 @@ Personal brand in one line: a young builder who ships polished, practical iOS ap
 
 - **Legal name:** Stoiber Software LLC (single-member Illinois LLC, formed August 2026)
 - **Address:** 5341 Grand Ave, Western Springs, IL 60558
-- **Contact email:** kyler@stoibersoftware.co (confirmed Aug 30, 2026)
-- **Domain:** stoibersoftware.co (confirmed Aug 30, 2026; stoibersoftware.com has belonged to someone else since 2012)
+- **Contact email:** kyler@stoibersoftware.us (confirmed Aug 30, 2026)
+- **Domain:** stoibersoftware.us (confirmed Aug 30, 2026; stoibersoftware.com has belonged to someone else since 2012)
 - **What it does:** iOS app development
 
 Do not put a phone number, EIN, or D-U-N-S number on the site. Only the two products below appear on the site — do not mention any other projects, businesses, or unreleased apps.

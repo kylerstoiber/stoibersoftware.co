@@ -1,18 +1,18 @@
 # Stoiber Software LLC — website
 
-Static company site for **stoibersoftware.co**. Plain HTML, CSS, and vanilla JS. No build step, no npm, no analytics.
+Static company site for **stoibersoftware.us**. Plain HTML, CSS, and vanilla JS. No build step, no npm, no analytics.
 
 ## Status checklist
 
 Done:
 
-- [x] Contact email → `kyler@stoibersoftware.co` (index, privacy, support)
+- [x] Contact email → `kyler@stoibersoftware.us` (index, privacy, support)
 - [x] SaleScout App Store link
-- [x] Domain → `stoibersoftware.co` in `CNAME` and in the `canonical` + `og:url` tags (`stoibersoftware.com` belongs to someone else)
+- [x] Domain → `stoibersoftware.us` in `CNAME` and in the `canonical` + `og:url` tags (`stoibersoftware.com` belongs to someone else)
 
 Still to do:
 
-- [ ] **Register `stoibersoftware.co`** (it had no DNS records on Aug 30 2026), add the DNS records below, then enable GitHub Pages (see Deploy). Until the domain resolves, don't enable Pages with the `CNAME` file present — the preview URL would redirect into nothing.
+- [ ] **Register `stoibersoftware.us`** (it had no DNS records on Aug 30 2026), add the DNS records below, then enable GitHub Pages (see Deploy). Until the domain resolves, don't enable Pages with the `CNAME` file present — the preview URL would redirect into nothing.
 - [ ] **Fliqit App Store link.** Fliqit isn't live yet, so its card shows a non-clickable "Coming soon to the App Store" pill. When it ships, in `index.html`:
   1. replace `<span class="btn btn-ghost btn--pending">Coming soon to the App&nbsp;Store</span>` with `<a class="btn btn-primary" href="https://apps.apple.com/…">Get Fliqit on the App&nbsp;Store</a>`
   2. change the card meta `iOS · Productivity · Coming soon` → `iOS · Productivity`
@@ -33,7 +33,7 @@ python3 -m http.server 8000
 
 ## Deploy to GitHub Pages
 
-1. Create a GitHub repo (any name; `stoibersoftware.co` is conventional) and push these files to the root of `main`:
+1. Create a GitHub repo (any name; `stoibersoftware.us` is conventional) and push these files to the root of `main`:
    ```sh
    git init -b main
    git add .
@@ -42,14 +42,14 @@ python3 -m http.server 8000
    git push -u origin main
    ```
 2. In the repo: **Settings → Pages → Build and deployment → Source: Deploy from a branch → `main` / `/ (root)`**.
-3. Under **Custom domain**, enter `stoibersoftware.co` and save. It must match the `CNAME` file exactly. Once the DNS check passes, tick **Enforce HTTPS**.
-4. Recommended: **your profile → Settings → Pages → Add a domain** and verify `stoibersoftware.co` there too, so nobody else can claim it on GitHub Pages.
+3. Under **Custom domain**, enter `stoibersoftware.us` and save. It must match the `CNAME` file exactly. Once the DNS check passes, tick **Enforce HTTPS**.
+4. Recommended: **your profile → Settings → Pages → Add a domain** and verify `stoibersoftware.us` there too, so nobody else can claim it on GitHub Pages.
 
 `.nojekyll` tells Pages to serve the files as-is; `CNAME` keeps the custom domain across future pushes.
 
 ## DNS records (at the registrar)
 
-Apex domain (`stoibersoftware.co`):
+Apex domain (`stoibersoftware.us`):
 
 | Type | Name | Value |
 |------|------|-------|
@@ -68,7 +68,7 @@ Apex domain (`stoibersoftware.co`):
 |-------|-------|-------|
 | CNAME | `www` | `<your-username>.github.io` |
 
-Remove any registrar "parking" A record first. Propagation can take up to 24 hours; check with `dig stoibersoftware.co +noall +answer`. GitHub will redirect `www` to the apex automatically once both resolve.
+Remove any registrar "parking" A record first. Propagation can take up to 24 hours; check with `dig stoibersoftware.us +noall +answer`. GitHub will redirect `www` to the apex automatically once both resolve.
 
 ## Editing the typing animation
 
