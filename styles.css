@@ -283,14 +283,15 @@ h2 {
 
 /* ---------- Product showcases ---------- */
 .showcase {
-  display: grid; gap: 36px; align-items: center;
+  display: grid; gap: clamp(28px, 4vw, 44px);
   padding: clamp(40px, 6vw, 72px) 0;
   border-top: 1px solid var(--line);
 }
 .showcase:last-child { padding-bottom: 0; }
+.showcase__text { display: grid; gap: 24px; }
 @media (min-width: 900px) {
-  .showcase { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 5vw, 72px); }
-  .showcase--reverse .showcase__text { order: 2; }
+  .showcase__text { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 5vw, 72px); align-items: start; }
+  .showcase__details { padding-top: 6px; }
 }
 .showcase__head { display: flex; align-items: center; gap: 16px; }
 .app-icon {
@@ -305,7 +306,7 @@ h2 {
   font-size: clamp(1.35rem, 2.2vw, 1.75rem); font-weight: 650; letter-spacing: -0.02em; line-height: 1.2;
 }
 .showcase__desc { margin-top: 14px; max-width: 52ch; font-size: 16.5px; color: var(--text-soft); }
-.feature-list { margin-top: 22px; border-top: 1px solid var(--line); }
+.feature-list { border-top: 1px solid var(--line); }
 .feature-list li {
   display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line);
   font-size: 15.5px; line-height: 1.5; color: var(--text-soft);
@@ -322,9 +323,8 @@ h2 {
 .store-badge:active { transform: scale(0.97); }
 .card-links { display: inline-flex; gap: 20px; }
 
-/* Screenshots: a three-up fan on desktop, a swipeable strip on phones */
-.showcase__shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); align-items: end; }
-.shot-wrap:nth-child(2) { margin-bottom: clamp(20px, 3vw, 40px); }
+/* Screenshots: three large App Store shots in a row on desktop, a swipeable strip on phones */
+.showcase__shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); align-items: start; max-width: 1040px; }
 .shot {
   position: relative; margin: 0; aspect-ratio: 560 / 1212;
   border-radius: clamp(14px, 2vw, 22px); overflow: hidden;
@@ -358,8 +358,7 @@ h2 {
     scrollbar-width: none;
   }
   .showcase__shots::-webkit-scrollbar { display: none; }
-  .shot-wrap { flex: 0 0 min(62%, 260px); scroll-snap-align: center; }
-  .shot-wrap:nth-child(2) { margin-bottom: 0; }
+  .shot-wrap { flex: 0 0 min(76%, 320px); scroll-snap-align: center; }
 }
 
 /* ---------- About ---------- */
