@@ -187,11 +187,10 @@ a[href^="mailto:["]::after {
   min-height: min(calc(100svh - var(--header-h)), 860px);
   padding: clamp(64px, 11vh, 128px) 0 clamp(48px, 7vh, 80px);
 }
-.hero::after { /* static teal dot grid: shown without JS or with reduced motion */
+.hero::after { /* static teal hairlines: shown without JS or with reduced motion */
   content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none;
-  background-image: radial-gradient(rgba(95, 179, 180, 0.32) 1px, transparent 1.5px);
-  background-size: 32px 32px;
-  background-position: 50% 50%;
+  background-image: repeating-linear-gradient(rgba(95, 179, 180, 0.13) 0 1px, transparent 1px 54px);
+  background-position: 0 27px;
 }
 .hero.has-field::after { display: none; }
 .hero-field { position: absolute; z-index: -1; inset: 0; pointer-events: none; }
@@ -226,27 +225,18 @@ a[href^="mailto:["]::after {
   font-size: clamp(1.1rem, 1.6vw, 1.3rem); line-height: 1.5; color: var(--text-soft);
 }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-.hero-facts {
-  display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: clamp(36px, 6vh, 56px);
-  font-size: 14px; font-weight: 500; color: var(--muted);
-}
-.hero-facts li { display: flex; align-items: center; gap: 9px; }
-.hero-facts li::before {
-  content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
-}
 
 /* Hero: JS-gated entrance states (with a CSS fallback if script.js never runs) */
 .js .hero-title__text { opacity: 0; }
 .js .hero.is-typing .hero-title__text,
 .js .hero.is-typed .hero-title__text { opacity: 1; }
-.js .hero-cycle, .js .hero-tagline, .js .hero-actions, .js .hero-facts {
+.js .hero-cycle, .js .hero-tagline, .js .hero-actions {
   opacity: 0; transform: translateY(10px);
   transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
 }
 .js .hero.is-typed .hero-cycle, .js .hero.is-typed .hero-tagline,
-.js .hero.is-typed .hero-actions, .js .hero.is-typed .hero-facts { opacity: 1; transform: none; }
+.js .hero.is-typed .hero-actions { opacity: 1; transform: none; }
 .js .hero.is-typed .hero-actions { transition-delay: 0.12s; }
-.js .hero.is-typed .hero-facts { transition-delay: 0.24s; }
 
 /* ---------- Scroll reveals ---------- */
 .js .reveal {
@@ -256,11 +246,11 @@ a[href^="mailto:["]::after {
 .js .reveal.is-in { opacity: 1; transform: none; }
 
 /* If the inline "js" class was added but script.js failed to load, show everything after 3.5s. */
-.js .reveal, .js .hero-title__text, .js .hero-cycle, .js .hero-tagline, .js .hero-actions, .js .hero-facts {
+.js .reveal, .js .hero-title__text, .js .hero-cycle, .js .hero-tagline, .js .hero-actions {
   animation: js-fallback 1ms linear 3.5s forwards;
 }
 .js-ready .reveal, .js-ready .hero-title__text, .js-ready .hero-cycle,
-.js-ready .hero-tagline, .js-ready .hero-actions, .js-ready .hero-facts { animation: none; }
+.js-ready .hero-tagline, .js-ready .hero-actions { animation: none; }
 @keyframes js-fallback { to { opacity: 1; transform: none; } }
 
 /* ---------- Sections ---------- */
@@ -628,7 +618,7 @@ mark { background: rgba(227, 179, 65, 0.28); color: var(--text); padding: 0 0.25
   html { scroll-behavior: auto; }
   .caret { animation: none; }
   .brand__mark, .btn, .btn:hover, .btn:active, .btn-primary:hover, .btn-ghost:hover { transform: none; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
-  .js .reveal, .js .hero-cycle, .js .hero-tagline, .js .hero-actions, .js .hero-facts { opacity: 1; transform: none; transition: none; animation: none; }
+  .js .reveal, .js .hero-cycle, .js .hero-tagline, .js .hero-actions { opacity: 1; transform: none; transition: none; animation: none; }
   .js .hero-title__text { opacity: 1; animation: none; }
   .card { transform: none; transition: border-color 0.35s, box-shadow 0.35s; }
   .card:active { transform: none; }

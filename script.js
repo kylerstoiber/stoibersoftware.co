@@ -208,22 +208,25 @@
     for (var d = 0; d < demos.length; d++) io.observe(demos[d]);
   }
 
-  /* ---------- 6. Interactive hero field ----------
-     A lattice of teal dots that swell and brighten near the pointer (and get
-     nudged away from it), with a slow idle wave so it also feels alive on
-     phones. Touch: tap or drag makes the dots bloom under your finger.
-     Skipped under reduced motion (static CSS dots show instead). */
-  function initHeroField() {
+  /* ---------- 6. Interactive hero lines ----------
+     Flat teal contour lines that drift slowly and part around the pointer
+     (or your finger on touch). Skipped under reduced motion; without JS the
+     CSS fallback shows static hairlines instead. */
+  function initHeroLines() {
     var hero = document.querySelector('.hero');
     if (!hero || reduceMotion || !window.CanvasRenderingContext2D) return;
-    var GAP = 32, RADIUS = 170;
+    var LINES = 14;     // how many lines span the hero
+    var AMP = 14;       // idle wave height (px)
+    var RADIUS = 200;   // pointer influence (px)
+    var BULGE = 48;     // how far lines part around the pointer (px)
+    var STEP = 10;      // sampling step along x (px)
     var canvas = document.createElement('canvas');
     canvas.className = 'hero-field';
     canvas.setAttribute('aria-hidden', 'true');
     hero.insertBefore(canvas, hero.firstChild);
     hero.classList.add('has-field');
     var ctx = canvas.getContext('2d');
-    var dots = [], w = 0, h = 0, rect = null, dirty = true;
+    var w = 0, h = 0, rect = null, dirty = true;
     var px = -9999, py = -9999, strength = 0, target = 0;
     var visible = true, raf = 0, t0 = performance.now();
 
@@ -234,9 +237,6 @@
       canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
       canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      dots.length = 0;
-      var ox = (w % GAP) / 2, oy = (h % GAP) / 2;
-      for (var y = oy; y <= h; y += GAP) for (var x = ox; x <= w; x += GAP) dots.push(x, y);
       dirty = false;
     }
 
@@ -246,23 +246,28 @@
       var t = (now - t0) / 1000;
       strength += (target - strength) * (target > strength ? 0.14 : 0.05); // quick in, slow fade
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#5FB3B4';
-      var live = strength > 0.01, r2 = RADIUS * RADIUS;
-      for (var i = 0; i < dots.length; i += 2) {
-        var x = dots[i], y = dots[i + 1];
-        var a = 0.22 + 0.16 * (0.5 + 0.5 * Math.sin(x * 0.011 + y * 0.008 + t * 0.7));
-        var r = 1.2;
-        if (live) {
-          var dx = x - px, dy = y - py, d2 = dx * dx + dy * dy;
-          if (d2 < r2) {
-            var d = Math.sqrt(d2), k = 1 - d / RADIUS; k = k * k * strength;
-            a += 0.7 * k; r += 1.8 * k;
-            var push = 7 * k / (d + 1);
-            x += dx * push; y += dy * push;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#5FB3B4';
+      var gap = h / (LINES + 1), live = strength > 0.01, r2 = RADIUS * RADIUS;
+      for (var i = 1; i <= LINES; i++) {
+        var baseY = gap * i, phase = i * 0.9, dir = baseY < py ? -1 : 1;
+        var near = Math.abs(baseY - py);
+        ctx.globalAlpha = 0.15 + (live && near < RADIUS ? 0.4 * (1 - near / RADIUS) * strength : 0);
+        ctx.beginPath();
+        for (var x = 0; x <= w + STEP; x += STEP) {
+          var y = baseY
+            + AMP * Math.sin(x * 0.0065 + phase + t * 0.45)
+            + AMP * 0.45 * Math.sin(x * 0.017 - phase + t * 0.3);
+          if (live) {
+            var dx = x - px, dy = y - py, d2 = dx * dx + dy * dy;
+            if (d2 < r2) {
+              var k = 1 - Math.sqrt(d2) / RADIUS; k = k * k * strength;
+              y += dir * BULGE * k;
+            }
           }
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-        ctx.globalAlpha = a > 1 ? 1 : a;
-        ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
+        ctx.stroke();
       }
       raf = requestAnimationFrame(frame);
     }
@@ -275,7 +280,7 @@
     hero.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') { point(e); target = 1; } });
     hero.addEventListener('pointermove', function (e) { if (e.pointerType !== 'touch' || target) point(e); });
     hero.addEventListener('pointerleave', function () { target = 0; });
-    hero.addEventListener('pointerdown', function (e) { if (e.pointerType === 'touch') { point(e); strength = 1; target = 1; } }); // tap = instant bloom
+    hero.addEventListener('pointerdown', function (e) { if (e.pointerType === 'touch') { point(e); strength = 1; target = 1; } }); // tap = instant part
     hero.addEventListener('pointerup', function (e) { if (e.pointerType === 'touch') target = 0; });
     hero.addEventListener('pointercancel', function () { target = 0; });
     window.addEventListener('scroll', function () { dirty = true; }, { passive: true });
@@ -296,5 +301,5 @@
   initTilt();
   initProgress();
   initDemos();
-  initHeroField();
+  initHeroLines();
 })();
